@@ -15,6 +15,8 @@ import java.util.stream.Stream;
 
 @Service
 public class ProductService {
+
+    public static final String PRODUCT_CACHE = "products";
     private final ProductRepository productRepository;
 
     public ProductService(ProductRepository productRepository) {
@@ -28,18 +30,18 @@ public class ProductService {
                 .toList();
     }
 
-    @CachePut(value = "PRODUCT_CACHE", key = "#result.id()")
+    @CachePut(value = PRODUCT_CACHE, key = "#result.id()")
     public ProductDTO create(ProductRequest productRequest) {
         Product newProduct = productRepository.save(matToEntity(productRequest));
         return mapToDTO(newProduct);
     }
 
-    @Cacheable(value = "PRODUCT_CACHE", key = "#result.id()")
+    @Cacheable(value = PRODUCT_CACHE, key = "#result.id()")
     public Optional<ProductDTO> getProduct(Long id) {
         return productRepository.findById(id).map(this::mapToDTO);
     }
 
-    @CachePut(value = "PRODUCT_CACHE", key = "#productId")
+    @CachePut(value = PRODUCT_CACHE, key = "#productId")
     public ProductDTO updateProduct(Long productId, ProductDTO productDTO) {
         if (!productId.equals(productDTO.id())) {
             throw new IllegalArgumentException("Product id does not match");
@@ -52,7 +54,7 @@ public class ProductService {
         return mapToDTO(productRepository.save(product));
     }
 
-    @CacheEvict(value = "PRODUCT_CACHE", key = "#id")
+    @CacheEvict(value = PRODUCT_CACHE, key = "#id")
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
