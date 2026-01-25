@@ -1,3 +1,16 @@
+server:
+  port: 9090
+
 spring:
   application:
     name: nplus1
+
+  datasource:
+    url: jdbc:postgresql://localhost:25432/order_nplus1_db
+    username: postgres
+    password: postgres
+  jpa:
+    open-in-view: false
+    show-sql: true
+
+
