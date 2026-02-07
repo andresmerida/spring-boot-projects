@@ -3,6 +3,7 @@ package dev.am.spring_h2_db.web;
 import dev.am.spring_h2_db.domain.PersonService;
 import dev.am.spring_h2_db.dto.PersonRequest;
 import dev.am.spring_h2_db.dto.PersonResponse;
+import dev.am.spring_h2_db.web.exceptions.PersonNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,9 @@ class PersonController {
 
     @GetMapping("/{id}")
     ResponseEntity<PersonResponse> findById(@PathVariable Integer id) {
-        return ResponseEntity.ok(personService.findById(id).orElseThrow(
-                () -> new RuntimeException("Person not found for id: " + id)
-        ));
+        return ResponseEntity
+                .ok(personService.findById(id)
+                        .orElseThrow(() -> PersonNotFoundException.of(id)));
     }
 
     @PostMapping
