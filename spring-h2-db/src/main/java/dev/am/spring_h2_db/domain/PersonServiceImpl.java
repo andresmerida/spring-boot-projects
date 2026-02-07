@@ -2,6 +2,7 @@ package dev.am.spring_h2_db.domain;
 
 import dev.am.spring_h2_db.dto.PersonRequest;
 import dev.am.spring_h2_db.dto.PersonResponse;
+import dev.am.spring_h2_db.web.exceptions.PersonNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,16 +40,18 @@ class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonResponse edit(Integer id, PersonRequest request) {
-        PersonEntity personEntity = personRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Person not found for id: " + id)
+        return personMapper.toDTOResponse(
+                personRepository.findById(id)
+                        .map(personEntity -> {
+                            personEntity.setEmail(request.email());
+                            personEntity.setMaritalStatus(request.maritalStatus());
+                            personEntity.setBirthDate(request.birthDate());
+                            personEntity.setLastName(request.lastName());
+                            personEntity.setNames(request.name());
+                            return personRepository.save(personEntity);
+                        })
+                .orElseThrow(() -> PersonNotFoundException.of(id))
         );
-        personEntity.setEmail(request.email());
-        personEntity.setMaritalStatus(request.maritalStatus());
-        personEntity.setBirthDate(request.birthDate());
-        personEntity.setLastName(request.lastName());
-        personEntity.setNames(request.name());
-
-        return personMapper.toDTOResponse(personRepository.save(personEntity));
     }
 
     @Override
