@@ -22,7 +22,7 @@ public class PersonMapper {
                 request.name(),
                 request.lastName(),
                 request.maritalStatus(),
-                request.birthDate(),
+                request.getBirthDate(),
                 request.email()
         );
     }

@@ -45,7 +45,7 @@ class PersonServiceImpl implements PersonService {
                         .map(personEntity -> {
                             personEntity.setEmail(request.email());
                             personEntity.setMaritalStatus(request.maritalStatus());
-                            personEntity.setBirthDate(request.birthDate());
+                            personEntity.setBirthDate(request.getBirthDate());
                             personEntity.setLastName(request.lastName());
                             personEntity.setNames(request.name());
                             return personRepository.save(personEntity);
