@@ -2,11 +2,14 @@ package dev.am.spring_h2_db.web.exceptions;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
+import org.springframework.http.*;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.net.URI;
@@ -17,6 +20,23 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private final Environment environment;
+
+    @Override
+    protected @Nullable ResponseEntity<Object> handleMethodArgumentNotValid(
+            @NonNull MethodArgumentNotValidException ex,
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
+        log.error("Validation error", ex);
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST,
+                "Validation failed");
+        problemDetail.setTitle("Validation error");
+        problemDetail.setType(URI.create("https://example.com/problems/validation-error"));
+        problemDetail.setProperty("errors", ex.getBindingResult().getFieldErrors());
+        problemDetail.setProperty("timestamp", LocalDateTime.now());
+
+        return ResponseEntity.badRequest().body(problemDetail);
+    }
 
     @ExceptionHandler(PersonNotFoundException.class)
     ProblemDetail handle(PersonNotFoundException ex) {
