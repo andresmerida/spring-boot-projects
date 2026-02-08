@@ -4,6 +4,7 @@ import dev.am.spring_h2_db.domain.PersonService;
 import dev.am.spring_h2_db.dto.PersonRequest;
 import dev.am.spring_h2_db.dto.PersonResponse;
 import dev.am.spring_h2_db.web.exceptions.PersonNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ class PersonController {
     }
 
     @PostMapping
-    ResponseEntity<PersonResponse> save(@RequestBody PersonRequest request) throws URISyntaxException {
+    ResponseEntity<PersonResponse> save(@Valid @RequestBody PersonRequest request) throws URISyntaxException {
         PersonResponse response = personService.save(request);
         return ResponseEntity
                 .created(new URI("/persons/" + response.id()))
@@ -39,7 +40,7 @@ class PersonController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<PersonResponse> edit(@PathVariable Integer id, @RequestBody PersonRequest request) {
+    ResponseEntity<PersonResponse> edit(@PathVariable Integer id, @Valid @RequestBody PersonRequest request) {
         return ResponseEntity.ok(personService.edit(id, request));
     }
 
