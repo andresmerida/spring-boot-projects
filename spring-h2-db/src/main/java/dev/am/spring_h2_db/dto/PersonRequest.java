@@ -1,13 +1,13 @@
 package dev.am.spring_h2_db.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import dev.am.spring_h2_db.domain.enums.MaritalStatus;
+import dev.am.spring_h2_db.web.custom_validations.DateFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public record PersonRequest(
         @NotBlank(message = "Name is required")
@@ -22,9 +22,17 @@ public record PersonRequest(
         MaritalStatus maritalStatus,
 
         @NotNull(message = "Birth date is required")
-        @Past(message = "Birth date must be in the past")
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-        LocalDate birthDate,
+        @DateFormat
+        String birthDate,
 
         String email) {
+
+        /**
+         * Parses the birthdate from a string into a LocalDate object using the "yyyy-MM-dd" format.
+         *
+         * @return the birthdate as a LocalDate instance.
+         */
+        public LocalDate getBirthDate() {
+            return LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
 }

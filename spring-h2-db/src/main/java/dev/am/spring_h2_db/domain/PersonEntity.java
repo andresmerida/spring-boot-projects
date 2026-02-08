@@ -2,6 +2,7 @@ package dev.am.spring_h2_db.domain;
 
 import dev.am.spring_h2_db.domain.enums.MaritalStatus;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Past;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class PersonEntity {
     private MaritalStatus maritalStatus;
 
     @Column(nullable = false, name = "birth_date")
+    @Past
     private LocalDate birthDate;
 
     private String email;
