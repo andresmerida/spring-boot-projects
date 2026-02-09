@@ -4,8 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,20 +35,25 @@ class SecurityConfig {
      */
     @Bean
     UserDetailsService userDetailsService() {
-        // Create a default encoder (Standard spring security behavior spring boot 4+) before saving in memory
-        UserDetails user = User.builder()
+        // Create a default encoder (Standard spring security behavior spring boot 4+) before saving in the memory map
+        CustomUser user = CustomUser.builder()
                 .username("user")
                 .password(passwordEncoder().encode("password"))
-                .roles("USER").build();
-        UserDetails admin = User.builder()
+                .email("user@gmail.com")
+                .roles("USER")
+                .enabled(true)
+                .build();
+        CustomUser admin = CustomUser.builder()
                 .username("admin")
                 .password(passwordEncoder().encode("password"))
+                .email("admin@gmial.com")
                 .roles("USER", "ADMIN")
+                .enabled(true)
                 .build();
+
         IO.println("User password: " + user.getPassword());
         IO.println("Admin password: " + admin.getPassword());
 
-        //return new InMemoryUserDetailsManager(user, admin);
         return new CustomUserDetailsService(user, admin);
     }
 
