@@ -4,6 +4,9 @@ import org.jspecify.annotations.Nullable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.Assert;
 
+/**
+ * Custom password encoder that reverses the password. (is better to use others defined no custom)
+ */
 class CustomPasswordEncoder implements PasswordEncoder {
 
     @Override

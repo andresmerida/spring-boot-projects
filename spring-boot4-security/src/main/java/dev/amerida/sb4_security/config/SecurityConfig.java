@@ -49,12 +49,13 @@ class SecurityConfig {
                 .build();
         IO.println("User password: " + user.getPassword());
         IO.println("Admin password: " + admin.getPassword());
-        return new InMemoryUserDetailsManager(user, admin);
+
+        //return new InMemoryUserDetailsManager(user, admin);
+        return new CustomUserDetailsService(user, admin);
     }
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        //return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        return new CustomPasswordEncoder();
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
