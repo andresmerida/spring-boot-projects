@@ -1,10 +1,10 @@
 package dev.amerida.sb4_security.web.static_pages;
 
+import dev.amerida.sb4_security.config.CustomUser;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.security.Principal;
 
 @RestController
 public class HomeController {
@@ -44,28 +44,35 @@ public class HomeController {
     }
 
     @GetMapping("/user")
-    public String private_page_user(Principal principal) {
+    public String private_page_user(@AuthenticationPrincipal CustomUser customUser) {
         return ("""
                 <center>
                 <h1>Spring Boot Tutorial</h1>
                 <h2>Private Page for User!</h2>
-                <p>Logged in as %s</p>
+                <p>Logged in as: %s</p>
+                <p>E-mail: %s</p>
+                <p>Role: %s</p>
                 <a href='/'>Home</a>
                 </center>
-                """).formatted(principal.getName().toUpperCase());
+                """).formatted(customUser.username(), customUser.email(), customUser.getAuthorities().toString());
     }
 
     @GetMapping("/admin")
-    public String private_page_admin(Authentication authentication) {
+    public String private_page_admin(@AuthenticationPrincipal CustomUser customUser) {
         return ("""
                 <center>
                 <h1>Spring Boot Tutorial</h1>
                 <h2>Private Page for Admin!</h2></br>
-                <p>Logged in as %s</p>
+                <p>Logged in as: %s</p>
+                <p>E-mail: %s</p>
                 <p>Roles: %s</p>
                 <a href='/'>Home</a>
                 </center>
-                """).formatted(authentication.getName().toUpperCase(),
-                authentication.getAuthorities().toString());
+                """)
+                .formatted(
+                        customUser.username().toUpperCase(),
+                        customUser.email(),
+                        customUser.getAuthorities().toString()
+                );
     }
 }
