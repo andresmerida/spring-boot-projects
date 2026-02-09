@@ -12,6 +12,11 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Authentication authentication) {
+        String login = "<a href='/login'>Login</a><br/>";
+        String logout = "<a href='/logout'>Logout</a><br/>";
+        String user = "<a href='/user'>Private for User</a><br/>";
+        String admin = "<a href='/admin'>Private for Admin</a>";
+
         if (authentication != null) {
             username = authentication.getName().toUpperCase();
         }
@@ -21,10 +26,21 @@ public class HomeController {
                 <h1>Spring Boot Security Tutorial</h1>
                 <p>Logged in as %s</p>
                 <a href='/public'>Public</a><br/>
-                <a href='/user'>Private for User</a><br/>
-                <a href='/admin'>Private for Admin</a>
+                <p></p>
+                %s
+                %s
+                <p></p>
+                %s
+                %s
+                <p></p>
                 </center>
-                """).formatted(username);
+                """).formatted(
+                        username,
+                        authentication == null ? login : "",
+                        authentication == null ? "" : logout,
+                        username.equals("Anonymous") ? "" : username.equals("USER") || username.equals("ADMIN") ? user : "",
+                        username.equals("Anonymous") ? "" : username.equals("ADMIN") ? admin : ""
+                );
     }
 
     @GetMapping("/public")
