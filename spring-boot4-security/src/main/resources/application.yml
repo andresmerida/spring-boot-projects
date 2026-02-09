@@ -4,9 +4,3 @@ server:
 spring:
   application:
     name: spring-boot4-security
-
-  security:
-    user:
-      name: andres
-      password: password
-      roles: USER
