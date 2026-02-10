@@ -1,0 +1,20 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:9.6.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql
+      MYSQL_DATABASE: spring_security_db
+      MYSQL_USER: dev_user
+      MYSQL_PASSWORD: dev_password
+    ports:
+      - 13306:3306
+    volumes:
+      - mysql:/var/lib/mysql
+    networks:
+      - database-network
+volumes:
+  mysql:
+networks:
+  database-network:

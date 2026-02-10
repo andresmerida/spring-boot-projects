@@ -1,0 +1,13 @@
+package dev.am.sb4_security_2;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class SpringBoot4Security2Application {
+
+	static void main(String[] args) {
+		SpringApplication.run(SpringBoot4Security2Application.class, args);
+	}
+
+}
