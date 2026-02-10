@@ -2,7 +2,6 @@ package dev.amerida.sb4_security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
@@ -16,7 +15,15 @@ class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) {
         return http
-                .formLogin(Customizer.withDefaults())
+                .formLogin(login -> login
+                        .defaultSuccessUrl("/", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutSuccessUrl("/")
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                )
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/","/public").permitAll()
                         .requestMatchers("/user/**").hasRole("USER")
