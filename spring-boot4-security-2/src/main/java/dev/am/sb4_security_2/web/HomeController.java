@@ -1,8 +1,8 @@
 package dev.am.sb4_security_2.web;
 
+import dev.am.sb4_security_2.domain.CustomUser;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -61,7 +61,7 @@ public class HomeController {
     }
 
     @GetMapping("/user")
-    public String private_page_user(@AuthenticationPrincipal User user) {
+    public String private_page_user(@AuthenticationPrincipal CustomUser user) {
         return ("""
                 <center>
                 <h1>Spring Boot Tutorial</h1>
@@ -74,7 +74,7 @@ public class HomeController {
     }
 
     @GetMapping("/admin")
-    public String private_page_admin(@AuthenticationPrincipal User user) {
+    public String private_page_admin(@AuthenticationPrincipal CustomUser user) {
         return ("""
                 <center>
                 <h1>Spring Boot Tutorial</h1>
