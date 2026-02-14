@@ -7,3 +7,6 @@ JdbcUserDetailsManager & PasswordEncoder
 
 - #### branch: part08_custom_userDetailsManager_custom_user_from_mysql
 Custom UserDetailsManager & Custom User from MySql
+
+- #### branch: part09_thymeleaf
+static pages with thymeleaf
