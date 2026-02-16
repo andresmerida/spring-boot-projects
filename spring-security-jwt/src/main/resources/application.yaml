@@ -1,0 +1,16 @@
+server:
+  port: 7272
+
+spring:
+  application:
+    name: spring-security-jwt
+
+  sql:
+    init:
+      mode: always  # Always run the init script schema.sql and data.sql on startup
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:13306/spring_security_jwt?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: dev_user
+    password: dev_password
