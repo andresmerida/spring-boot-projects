@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-security-jwt2
+
+  sql:
+    init:
+      mode: always  # always run the init script schema.sql and data.sql on startup
+
+  security:
+    user:
+      name: andres
+      password: password
+
+  datasource:
+    url: jdbc:mysql://localhost:13306/spring_security_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: dev_user
+    password: dev_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
