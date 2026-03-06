@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">My App</title>
+</head>
+<body>
+
+<header>
+  <h1>My Spring Boot 4 Application</h1>
+  <nav>...</nav>
+</header>
+
+<main layout:fragment="content">
+  <p>Default content that gets replaced.</p>
+</main>
+
+<footer>
+  <p>&copy; 2026 My Company</p>
+</footer>
+
+</body>
+</html>
