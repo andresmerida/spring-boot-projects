@@ -1,0 +1,11 @@
+name: "transactions"
+services:
+  postgres:
+    image: postgres:18.1-alpine
+    container_name: postgres
+    environment:
+      - 'POSTGRES_DB=my_db'
+      - 'POSTGRES_PASSWORD=postgres'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '15432:5432'
