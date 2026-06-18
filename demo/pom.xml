@@ -40,6 +40,13 @@
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- # Enable Content Negotiation, GET http://localhost:8080/products?format=xml -->
+		<dependency>
+			<groupId>tools.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>3.2.0</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
