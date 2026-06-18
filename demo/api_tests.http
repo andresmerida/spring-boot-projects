@@ -22,3 +22,6 @@ Content-Type: application/json
 
 ### Get products
 GET http://localhost:8080/products/filter
+
+### Get all products
+GET http://localhost:8080/products?format=xml
