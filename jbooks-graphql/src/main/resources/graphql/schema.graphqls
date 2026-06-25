@@ -1,0 +1,49 @@
+# Operation types (Query, Mutation, Subscription)
+type Query {
+    books: [Book!]!
+    book(id: ID!): Book!
+    authors: [Author!]!
+    search(text: String!): [SearchItem]
+    review(id: Int!): Review
+    reviews(filter: ReviewFilter): [Review]!
+}
+
+type Mutation {
+    addBook(bookInput: BookInput): Book!
+}
+
+# Object types (output types)
+type Book {
+    id: Int!
+    title: String!
+    author: Author
+}
+
+type Author {
+    id: ID!
+    name: String!
+    books: [Book!]!
+}
+
+input BookInput {
+    title: String!
+    authorId: Int!
+}
+
+union SearchItem = Author | Book
+
+type Review {
+    id: ID!
+    rating: Int!
+    comment: String
+    createdAt: String!
+    reviewerName: String!
+    verified: Boolean!
+    book: Book!
+}
+
+input ReviewFilter {
+    rating: Int
+    verified: Boolean
+    reviewerName: String
+}

@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: jbooks-graphql
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/jbooks
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # do not this in production
+    show-sql: true
+
+  graphql:
+    graphiql:
+      enabled: true
+
+  #threads:
+    #virtual:
+      #enabled: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0  # do not do this in production
